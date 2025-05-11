@@ -1,6 +1,14 @@
 name: Build WinSparkle
 
-on: [push, pull_request]
+on:
+  repository_dispatch:
+    types:
+      - webhook-1
+      - webhook-2
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
