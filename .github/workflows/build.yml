@@ -45,11 +45,15 @@ jobs:
           ${{matrix.platform }}/${{ matrix.configuration }}/*.dll
           ${{matrix.platform }}/${{ matrix.configuration }}/*.lib
           ${{matrix.platform }}/${{ matrix.configuration }}/*.exe
-          # **/*.dll
-          # **/*.lib
-          # **/*.pdb
-          # **/example*.exe
-          # **/winsparkle-tool.exe
+    
+    - name: Create artifact name file
+      run: echo "${{ matrix.platform }}-windows-${{ matrix.configuration }}" > artifact_name_file-${{ matrix.platform }}-${{ matrix.configuration }}.txt
+
+    - name: Upload artifact_name_file ${{ matrix.platform }}-${{ matrix.configuration }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: artifact_name_file-${{ matrix.platform }}-${{ matrix.configuration }}
+        path: artifact_name_file-${{ matrix.platform }}-${{ matrix.configuration }}.txt
 
   create-release:
     runs-on: ubuntu-latest
@@ -79,24 +83,24 @@ jobs:
         with:
           path: ./artifacts
 
-      # - name: Merge artifact names
-      #   run: |
-      #     find ./artifacts/artifact_name_* -type f -name "*.*" -exec cat {} + > merged_artifact_list.txt
-      #     cat merged_artifact_list.txt
+      - name: Merge artifact names
+        run: |
+          find ./artifacts/artifact_name_* -type f -name "*.*" -exec cat {} + > merged_artifact_list.txt
+          cat merged_artifact_list.txt
 
-      # - name: Compress Artifact Directories
-      #   run: |
-      #     sed -i 's/\r$//' merged_artifact_list.txt
-      #     while IFS= read -r dir; do
-      #     # Ensure the directory exists
-      #     if [ -d "./artifacts/$dir" ]; then
-      #     cd "./artifacts/$dir"
-      #     zip -r "../${dir}.zip" ./*
-      #     cd ../..
-      #     else
-      #     echo "Directory ./artifacts/$dir does not exist."
-      #     fi
-      #     done < merged_artifact_list.txt
+      - name: Compress Artifact Directories
+        run: |
+          sed -i 's/\r$//' merged_artifact_list.txt
+          while IFS= read -r dir; do
+          # Ensure the directory exists
+          if [ -d "./artifacts/$dir" ]; then
+          cd "./artifacts/$dir"
+          zip -r "../${dir}.zip" ./*
+          cd ../..
+          else
+          echo "Directory ./artifacts/$dir does not exist."
+          fi
+          done < merged_artifact_list.txt
 
       - name: List Zipped Files
         run: ls ./artifacts/
