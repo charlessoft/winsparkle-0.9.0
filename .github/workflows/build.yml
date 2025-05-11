@@ -58,7 +58,7 @@ jobs:
           ${{matrix.platform }}/${{ matrix.configuration }}/*.exe
     
     - name: Create artifact name file
-      run: echo "winsparkle-binaries-${{ env.CONFIG_SHORT }}-${{ matrix.platform }}" > artifact_name_file-${{ matrix.platform }}-${{ matrix.configuration }}.txt
+      run: echo "winsparkle-binaries-${{ env.CONFIG_SHORT }}-${{ matrix.platform }}" > artifact_name_file-${{ env.CONFIG_SHORT }}-${{ matrix.configuration }}.txt
 
     - name: Upload artifact_name_file ${{ env.CONFIG_SHORT }}-${{ matrix.configuration }}
       uses: actions/upload-artifact@v4
