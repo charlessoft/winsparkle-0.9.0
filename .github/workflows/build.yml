@@ -28,10 +28,10 @@ jobs:
       id: vars
       shell: powershell
       run: |
-        if (${{ matrix.configuration }} -eq 'Debug') {
-          echo "CONFIG_SHORT=dbg" | Out-File -FilePath $env:GITHUB_ENV -Append
+        if ('${{ matrix.configuration }}' -eq 'Debug') {
+          "CONFIG_SHORT=dbg" | Out-File -FilePath $env:GITHUB_ENV -Append
         } else {
-          echo "CONFIG_SHORT=rel" | Out-File -FilePath $env:GITHUB_ENV -Append
+          "CONFIG_SHORT=rel" | Out-File -FilePath $env:GITHUB_ENV -Append
         }
 
 
