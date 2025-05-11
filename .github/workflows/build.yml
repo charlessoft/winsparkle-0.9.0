@@ -42,11 +42,14 @@ jobs:
         name: winsparkle-binaries-${{ matrix.platform }}
         path: |
           include/winsparkle*.h
-          **/*.dll
-          **/*.lib
-          **/*.pdb
-          **/example*.exe
-          **/winsparkle-tool.exe
+          ${{matrix.platform }}/${{ matrix.configuration }}/*.dll
+          ${{matrix.platform }}/${{ matrix.configuration }}/*.lib
+          ${{matrix.platform }}/${{ matrix.configuration }}/*.exe
+          # **/*.dll
+          # **/*.lib
+          # **/*.pdb
+          # **/example*.exe
+          # **/winsparkle-tool.exe
 
   create-release:
     runs-on: ubuntu-latest
