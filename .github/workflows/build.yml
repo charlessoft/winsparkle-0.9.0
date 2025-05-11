@@ -8,7 +8,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        platform: [Win32, x64, ARM64]
+        platform: [x64]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -44,20 +44,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Fetch binaries (Win32)
-        uses: actions/download-artifact@v4
-        with:
-          name: winsparkle-binaries-Win32
+
 
       - name: Fetch binaries (x64)
         uses: actions/download-artifact@v4
         with:
           name: winsparkle-binaries-x64
 
-      - name: Fetch binaries (ARM64)
-        uses: actions/download-artifact@v4
-        with:
-          name: winsparkle-binaries-ARM64
+
 
       - name: Build NuGet package
         run: nuget pack nuget/WinSparkle.nuspec -Verbosity detailed
@@ -99,20 +93,14 @@ jobs:
           submodules: 'recursive'
           fetch-depth: 0
 
-      - name: Fetch binaries (Win32)
-        uses: actions/download-artifact@v4
-        with:
-          name: winsparkle-binaries-Win32
+  
 
       - name: Fetch binaries (x64)
         uses: actions/download-artifact@v4
         with:
           name: winsparkle-binaries-x64
 
-      - name: Fetch binaries (ARM64)
-        uses: actions/download-artifact@v4
-        with:
-          name: winsparkle-binaries-ARM64
+ 
 
       - name: Package tarballs
         run: make -f distrib.makefile
