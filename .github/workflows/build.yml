@@ -24,6 +24,15 @@ jobs:
       with:
         submodules: 'recursive'
 
+    - name: Set up variables
+      id: vars
+      run: |
+        if [ "${{ matrix.configuration }}" == "Debug" ]; then
+          echo "CONFIG_SHORT=dbg" >> $GITHUB_ENV
+        else
+          echo "CONFIG_SHORT=rel" >> $GITHUB_ENV
+        fi
+
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
@@ -39,7 +48,7 @@ jobs:
     - name: Archive binaries
       uses: actions/upload-artifact@v4
       with:
-        name: winsparkle-binaries-${{ matrix.configuration }}-${{ matrix.platform }}
+        name: winsparkle-binaries-${{ env.CONFIG_SHORT }}-${{ matrix.platform }}
         path: |
           include/winsparkle*.h
           ${{matrix.platform }}/${{ matrix.configuration }}/*.dll
@@ -47,13 +56,13 @@ jobs:
           ${{matrix.platform }}/${{ matrix.configuration }}/*.exe
     
     - name: Create artifact name file
-      run: echo "winsparkle-binaries-${{ matrix.configuration }}-${{ matrix.platform }}" > artifact_name_file-${{ matrix.platform }}-${{ matrix.configuration }}.txt
+      run: echo "winsparkle-binaries-${{ env.CONFIG_SHORT }}-${{ matrix.platform }}" > artifact_name_file-${{ matrix.platform }}-${{ matrix.configuration }}.txt
 
-    - name: Upload artifact_name_file ${{ matrix.platform }}-${{ matrix.configuration }}
+    - name: Upload artifact_name_file ${{ env.CONFIG_SHORT }}-${{ matrix.configuration }}
       uses: actions/upload-artifact@v4
       with:
-        name: artifact_name_file-${{ matrix.platform }}-${{ matrix.configuration }}
-        path: artifact_name_file-${{ matrix.platform }}-${{ matrix.configuration }}.txt
+        name: artifact_name_file-${{ env.CONFIG_SHORT }}-${{ matrix.configuration }}
+        path: artifact_name_file-${{ env.CONFIG_SHORT }}-${{ matrix.configuration }}.txt
 
   create-release:
     runs-on: ubuntu-latest
