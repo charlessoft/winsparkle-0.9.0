@@ -26,12 +26,14 @@ jobs:
 
     - name: Set up variables
       id: vars
+      shell: powershell
       run: |
-        if [ "${{ matrix.configuration }}" == "Debug" ]; then
-          echo "CONFIG_SHORT=dbg" >> $GITHUB_ENV
-        else
-          echo "CONFIG_SHORT=rel" >> $GITHUB_ENV
-        fi
+        if (${{ matrix.configuration }} -eq 'Debug') {
+          echo "CONFIG_SHORT=dbg" | Out-File -FilePath $env:GITHUB_ENV -Append
+        } else {
+          echo "CONFIG_SHORT=rel" | Out-File -FilePath $env:GITHUB_ENV -Append
+        }
+
 
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
