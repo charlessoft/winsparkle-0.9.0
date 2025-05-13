@@ -56,6 +56,8 @@ jobs:
           ${{matrix.platform }}/${{ matrix.configuration }}/*.dll
           ${{matrix.platform }}/${{ matrix.configuration }}/*.lib
           ${{matrix.platform }}/${{ matrix.configuration }}/*.exe
+        retention-days: 3 # <= 这里可以设置保留天数
+
     
     - name: Create artifact name file
       run: echo "winsparkle-binaries-${{ env.CONFIG_SHORT }}-${{ matrix.platform }}" > artifact_name_file-${{ env.CONFIG_SHORT }}-${{ matrix.configuration }}.txt
@@ -65,6 +67,8 @@ jobs:
       with:
         name: artifact_name_file-${{ env.CONFIG_SHORT }}-${{ matrix.configuration }}
         path: artifact_name_file-${{ env.CONFIG_SHORT }}-${{ matrix.configuration }}.txt
+        retention-days: 3 # <= 这里可以设置保留天数
+
 
   create-release:
     runs-on: ubuntu-latest
