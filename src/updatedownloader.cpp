@@ -195,6 +195,7 @@ void UpdateDownloader::Run()
           LogError("Using unsigned updates!");
       }
 
+      ApplicationController::NotifyInstallerPckageCallback(sink.GetFilePath().c_str());
       UI::NotifyUpdateDownloaded(sink.GetFilePath(), m_appcast);
     }
     catch (BadSignatureException&)

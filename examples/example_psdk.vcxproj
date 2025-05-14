@@ -310,7 +310,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="psdk\app_psdk.c" />
+    <ClCompile Include="psdk\app_psdk.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="psdk\app_psdk.rc" />

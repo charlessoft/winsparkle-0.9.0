@@ -17,7 +17,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="psdk\app_psdk.c">
+    <ClCompile Include="psdk\app_psdk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

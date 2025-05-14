@@ -106,5 +106,6 @@
   <ItemGroup>
     <None Include="WinSparkle.Targets" />
     <None Include="packages.config" />
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

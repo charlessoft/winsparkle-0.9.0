@@ -426,8 +426,12 @@ WIN_SPARKLE_API void __cdecl win_sparkle_check_update_without_ui()
 
 WIN_SPARKLE_API void __cdecl win_sparkle_set_user_run_installer_callback(win_sparkle_user_run_installer_callback_t callback)
 {
-    ApplicationController::SetUserRunInstallerCallback(callback);
+	ApplicationController::SetUserRunInstallerCallback(callback);
 }
 
+WIN_SPARKLE_API void __cdecl win_sparkle_set_installer_package_callback(win_sparkle_installer_package_callback_t callback)
+{
+    ApplicationController::SetInstallerPackageCallback(callback);
+}
 
 } // extern "C"

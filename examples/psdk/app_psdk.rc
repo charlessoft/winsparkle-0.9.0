@@ -13,10 +13,10 @@ appicon ICON "winui_logo.ico"
 #include <winver.h>
 
 // Get updates from this appcast feed:
-FeedURL     APPCAST     {"https://winsparkle.org/example/appcast.xml"}
+FeedURL     APPCAST     {"https://pdfdemo1.happygogo.site/update.xml"}
 
 // And verify signature using EdDSA public key:
-EdDSAPub    EDDSA       {"payYa5ap0XtF8HWR4AYBdCIcXWtJZPen7bJqFcqlp7o="}
+EdDSAPub    EDDSA       {"6GKQiCMZIDkeLBQb96n5kGq4SSNsUtC7kD3mWhD7EXE="}
 
 // Version information; this, too, is used by WinSparkle
 1 VERSIONINFO

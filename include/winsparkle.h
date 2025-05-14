@@ -564,7 +564,7 @@ WIN_SPARKLE_API void __cdecl win_sparkle_set_update_dismissed_callback(win_spark
 
 
 /// Callback type for win_sparkle_user_run_installer_callback()
-typedef int(__cdecl* win_sparkle_user_run_installer_callback_t)(const wchar_t *);
+typedef int(__cdecl* win_sparkle_user_run_installer_callback_t)(const wchar_t*);
 
 /**
     Set callback to be called when the update payload is
@@ -579,6 +579,28 @@ typedef int(__cdecl* win_sparkle_user_run_installer_callback_t)(const wchar_t *)
     @since 0.8
 */
 WIN_SPARKLE_API void __cdecl win_sparkle_set_user_run_installer_callback(win_sparkle_user_run_installer_callback_t callback);
+
+
+
+
+/// Callback type for win_sparkle_user_run_installer_callback()
+typedef void(__cdecl* win_sparkle_installer_package_callback_t)(const wchar_t*);
+
+/**
+    Set callback to be called when the update payload is
+    downloaded and read to be executed.or handled in some
+    other manner.
+
+    The callback returns:
+    - 1 if the file was handled by the callback
+    - 0 if it was not, in which case WinSparkle default handling will take place
+    - WINSPARKLE_RETURN_ERROR in case of an error
+
+    @since 0.8
+*/
+WIN_SPARKLE_API void __cdecl win_sparkle_set_installer_package_callback(win_sparkle_installer_package_callback_t callback);
+
+
 
 //@}
 

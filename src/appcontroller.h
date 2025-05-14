@@ -81,6 +81,9 @@ public:
     /// Run the user installer callback if one is set.
     static int UserRunInstallerCallback(const wchar_t*);
 
+    /// 下载安装包成功后回调函数
+    static void NotifyInstallerPckageCallback(const wchar_t*);
+
     //@}
 
     /**
@@ -151,11 +154,17 @@ public:
         ms_cbUpdateDismissed = callback;
     }
 
-    static void SetUserRunInstallerCallback(win_sparkle_user_run_installer_callback_t callback)
-    {
-        CriticalSectionLocker lock(ms_csVars);
-        ms_cbUserRunInstaller = callback;
-    }
+	static void SetUserRunInstallerCallback(win_sparkle_user_run_installer_callback_t callback)
+	{
+		CriticalSectionLocker lock(ms_csVars);
+		ms_cbUserRunInstaller = callback;
+	}
+
+	static void SetInstallerPackageCallback(win_sparkle_installer_package_callback_t callback)
+	{
+		CriticalSectionLocker lock(ms_csVars);
+        ms_cbInstallerPackage = callback;
+	}
 
     //@}
 
@@ -175,6 +184,9 @@ private:
     static win_sparkle_update_postponed_callback_t    ms_cbUpdatePostponed;
     static win_sparkle_update_dismissed_callback_t    ms_cbUpdateDismissed;
     static win_sparkle_user_run_installer_callback_t  ms_cbUserRunInstaller;
+
+    static win_sparkle_installer_package_callback_t   ms_cbInstallerPackage;
+
     
 };
 
