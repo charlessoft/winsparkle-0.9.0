@@ -115,7 +115,7 @@ jobs:
               cd ../..
               
               # Calculate MD5 checksum
-              md5sum="./artifacts/${dir}.zip" | awk '{ print \$1 }'
+              md5sum=$(md5sum "./artifacts/${dir}.zip" | awk '{ print $1 }')
               
               # Write to filelist.txt
               echo "${dir}.zip | ${md5sum}" >> filelist.txt
