@@ -56,7 +56,7 @@ jobs:
           ${{matrix.platform }}/${{ matrix.configuration }}/*.dll
           ${{matrix.platform }}/${{ matrix.configuration }}/*.lib
           ${{matrix.platform }}/${{ matrix.configuration }}/*.exe
-        retention-days: 3 # <= 这里可以设置保留天数
+        retention-days: 1 # <= 这里可以设置保留天数
 
     
     - name: Create artifact name file
@@ -67,7 +67,7 @@ jobs:
       with:
         name: artifact_name_file-${{ env.CONFIG_SHORT }}-${{ matrix.configuration }}
         path: artifact_name_file-${{ env.CONFIG_SHORT }}-${{ matrix.configuration }}.txt
-        retention-days: 3 # <= 这里可以设置保留天数
+        retention-days: 1 # <= 这里可以设置保留天数
 
 
   create-release:
@@ -103,19 +103,39 @@ jobs:
           find ./artifacts/artifact_name_* -type f -name "*.*" -exec cat {} + > merged_artifact_list.txt
           cat merged_artifact_list.txt
 
-      - name: Compress Artifact Directories
+      - name: Compress Artifact Directories and Generate MD5
         run: |
           sed -i 's/\r$//' merged_artifact_list.txt
+          > filelist.txt  # 清空或创建 filelist.txt 文件
           while IFS= read -r dir; do
-          # Ensure the directory exists
-          if [ -d "./artifacts/$dir" ]; then
-          cd "./artifacts/$dir"
-          zip -r "../${dir}.zip" ./*
-          cd ../..
-          else
-          echo "Directory ./artifacts/$dir does not exist."
-          fi
+            # Ensure the directory exists
+            if [ -d "./artifacts/$dir" ]; then
+              cd "./artifacts/$dir"
+              zip -r "../${dir}.zip" ./*
+              cd ../..
+              
+              # Calculate MD5 checksum
+              md5sum="./artifacts/${dir}.zip" | awk '{ print \$1 }'
+              
+              # Write to filelist.txt
+              echo "${dir}.zip | ${md5sum}" >> filelist.txt
+            else
+              echo "Directory ./artifacts/$dir does not exist."
+            fi
           done < merged_artifact_list.txt
+      # - name: Compress Artifact Directories
+      #   run: |
+      #     sed -i 's/\r$//' merged_artifact_list.txt
+      #     while IFS= read -r dir; do
+      #     # Ensure the directory exists
+      #     if [ -d "./artifacts/$dir" ]; then
+      #     cd "./artifacts/$dir"
+      #     zip -r "../${dir}.zip" ./*
+      #     cd ../..
+      #     else
+      #     echo "Directory ./artifacts/$dir does not exist."
+      #     fi
+      #     done < merged_artifact_list.txt
 
       - name: List Zipped Files
         run: ls ./artifacts/
@@ -126,5 +146,6 @@ jobs:
         run: |
           cd ./artifacts
           gh release upload $RELEASE_DATE ./*.zip  
+          gh release upload $RELEASE_DATE filelist.txt 
 
  
