@@ -50,7 +50,7 @@ public:
 		int x = 0;
         return 1;
 	};
-    static void on_win_sparkle_set_installer_package_callback(const wchar_t* path) {
+    static void on_win_sparkle_set_installer_package_callback(const wchar_t* path, const char* version) {
         int x = 0;
     }
 	static void on_win_sparkle_error_callback()

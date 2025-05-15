@@ -166,10 +166,10 @@ int ApplicationController::UserRunInstallerCallback(const wchar_t* filePath)
     return ms_cbUserRunInstaller(filePath);
 }
 
-void ApplicationController::NotifyInstallerPckageCallback(const wchar_t* filePath)
+void ApplicationController::NotifyInstallerPckageCallback(const wchar_t* filePath,const char* version)
 {
     if(ms_cbInstallerPackage)
-        return ms_cbInstallerPackage(filePath);
+        return ms_cbInstallerPackage(filePath, version);
 }
 
 } // namespace winsparkle

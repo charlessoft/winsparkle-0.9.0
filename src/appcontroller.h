@@ -82,7 +82,7 @@ public:
     static int UserRunInstallerCallback(const wchar_t*);
 
     /// 下载安装包成功后回调函数
-    static void NotifyInstallerPckageCallback(const wchar_t*);
+    static void NotifyInstallerPckageCallback(const wchar_t*, const char* );
 
     //@}
 
