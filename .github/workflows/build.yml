@@ -123,6 +123,7 @@ jobs:
               echo "Directory ./artifacts/$dir does not exist."
             fi
           done < merged_artifact_list.txt
+
       # - name: Compress Artifact Directories
       #   run: |
       #     sed -i 's/\r$//' merged_artifact_list.txt
