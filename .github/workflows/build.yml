@@ -106,7 +106,7 @@ jobs:
       - name: Compress Artifact Directories and Generate MD5
         run: |
           sed -i 's/\r$//' merged_artifact_list.txt
-          > filelist.txt  # 清空或创建 filelist.txt 文件
+          > ./artifacts/filelist.txt  # 清空或创建 filelist.txt 文件
           while IFS= read -r dir; do
             # Ensure the directory exists
             if [ -d "./artifacts/$dir" ]; then
@@ -118,7 +118,7 @@ jobs:
               md5sum=$(md5sum "./artifacts/${dir}.zip" | awk '{ print $1 }')
               
               # Write to filelist.txt
-              echo "${dir}.zip | ${md5sum}" >> filelist.txt
+              echo "${dir}.zip | ${md5sum}" >> ./artifacts/filelist.txt
             else
               echo "Directory ./artifacts/$dir does not exist."
             fi
@@ -139,7 +139,9 @@ jobs:
       #     done < merged_artifact_list.txt
 
       - name: List Zipped Files
-        run: ls ./artifacts/
+        run: | 
+          ls ./artifacts/
+          ls 
 
       - name: Upload Artifacts to Release
         env:
